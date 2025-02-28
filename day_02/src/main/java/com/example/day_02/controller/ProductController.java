@@ -1,16 +1,19 @@
-package com.example.day_03.controller;
+package com.example.day_02.controller;
 
-import com.example.day_03.model.Product;
+import com.example.day_02.model.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
     public final List<Product> listProduct = new ArrayList<>(List.of(
         new Product(1, "Laptop Apple MacBook Air 13 inch M1 8GB/256GB", "Mô tả cho laptop Apple MacBook Air 13 inch M1", 2300, "Apple"),
@@ -41,15 +44,79 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(
-        @PathVariable Integer id
+    public ResponseEntity<Product> getProductById(
+        @PathVariable int id
     ) {
         if (listProduct.isEmpty() || id <= 0) {
-            return null;
+            return ResponseEntity.badRequest().build();
         }
         return listProduct.stream()
             .filter(pro -> pro.getId() == id)
             .findFirst()
-            .orElse(null);
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/name-starts/{prefix}")
+    public ResponseEntity<List<Product>> getProductsByNameStart(
+        @PathVariable String prefix
+    ) {
+        if (listProduct.isEmpty() || prefix == null || prefix.trim() == "") {
+            return ResponseEntity.badRequest().build();
+        }
+        List<Product> results =  listProduct.stream()
+            .filter(pro -> pro.getName().startsWith(prefix))
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/price/{min}/{max}")
+    public ResponseEntity<List<Product>> getProductsByPriceRange(
+        @PathVariable int min,
+        @PathVariable int max
+    ) {
+        if (listProduct.isEmpty() || min <= 0 || max <=0 || min > max) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<Product> results = listProduct.stream()
+            .filter(pro -> pro.getPrice() >= min && pro.getPrice() <= max)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/brand/{brand}")
+    public ResponseEntity<List<Product>> getProductsByBrand(
+        @PathVariable String brand
+    ) {
+        if (listProduct.isEmpty() || brand == null || brand.trim() == "") {
+            return ResponseEntity.badRequest().build();
+        }
+        List<Product> results = listProduct.stream()
+            .filter(pro -> pro.getBrand().equalsIgnoreCase(brand))
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/brand/{brand}/max-price")
+    public ResponseEntity<List<Product>> getProductsByBrandWithMaxPrice(
+        @PathVariable String brand
+    ) {
+        if (listProduct.isEmpty() || brand == null || brand.trim() == "") {
+            return ResponseEntity.badRequest().build();
+        }
+        int maxPrice = listProduct.stream()
+            .filter(pro -> pro.getBrand().equalsIgnoreCase(brand))
+            .mapToInt(Product::getPrice)
+            .max()
+            .orElse(0);
+        List<Product> results = listProduct.stream()
+            .filter(pro -> pro.getBrand().equalsIgnoreCase(brand) && pro.getPrice() == maxPrice)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(results);
+    }
+
 }
