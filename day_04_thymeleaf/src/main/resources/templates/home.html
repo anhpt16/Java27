@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
+</head>
+<body>
+<h1>Danh sách người:</h1>
+<h1 th:text="${hi}"></h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Giới tính</th>
+        <th>Tuổi</th>
+    </tr>
+    <!-- Lặp qua danh sách persons -->
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.id}"></td>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.gender}"></td>
+        <td th:text="${person.age}"></td>
+    </tr>
+</table>
+</body>
+</html>

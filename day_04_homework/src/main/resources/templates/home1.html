@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webdemo</title>
+  <link rel="stylesheet" th:href="@{./css/style.css}">
+</head>
+<body>
+<h1>Danh sách nghề nghiệp và số lượng</h1>
+<div class="container">
+  <table>
+    <tr>
+      <th>Nghề Nghiệp</th>
+      <th>Số lượng</th>
+    </tr>
+    <tr th:each="entry : ${results}">
+      <td th:text="${entry.key}"></td>
+      <td th:text="${entry.value}"></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
