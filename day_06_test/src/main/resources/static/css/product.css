@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+h1 {
+    color: brown;
+    font-family: 'Big Shoulders Stencil', sans-serif;
+    text-align: center;
+}
+
+/*img {*/
+/*    width: 200px;*/
+/*    height: 200px;*/
+/*}*/
+
+
+.container {
+    width: 100%;
+    padding: 20px 50px;
+    box-sizing: border-box;
+
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các Card tự động xuống dòng */
+    gap: 20px; /* Khoảng cách giữa các Card */
+    justify-content: space-between;
+}
+
+.card {
+    width: calc(20% - 20px); /* Đặt 5 Card trong mỗi dòng */
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    height: 100%;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Tăng kích thước khi hover */
+}
+
+.card-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card-title {
+    font-family: 'Roboto', sans-serif;
+    color: #555555;
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.card-price,
+.card-discount-price {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: #555;
+}
+
+.card-discount-price {
+    font-family: 'Roboto', sans-serif;
+    color: #e74c3c; /* Màu đỏ cho giá đã giảm */
+    font-weight: bold;
+}
+
+.card-rating {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: #f39c12; /* Màu vàng cho rating */
+    margin: 0 0 0 10px;
+}
+
+.rating-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: end;
+}
+.rating-container i {
+    font-size: 1em;
+    color: #f39c12;
+}
+
+
+.old-price {
+    text-decoration: line-through;
+    color: darkgrey;
+}
+
+.new-price {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 50px;
+}
+
+/*Input*/
+input[type="text"] {
+    width: 250px; /* Đặt chiều rộng của input để chiếm hết không gian */
+    padding: 10px; /* Thêm khoảng cách bên trong */
+    border: 1px solid #ccc; /* Đặt viền mỏng và màu sáng */
+    border-radius: 4px; /* Bo tròn các góc */
+    font-size: 16px; /* Kích thước chữ trong input */
+    outline: none; /* Bỏ viền mặc định khi focus */
+    box-sizing: border-box; /* Bao gồm padding và border trong kích thước */
+}
+
+input[type="text"]:focus {
+    border-color: #007bff; /* Đổi màu viền khi focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Thêm hiệu ứng shadow khi focus */
+}
+
+input[type="text"]::placeholder {
+    color: #999; /* Màu cho placeholder */
+    font-style: italic; /* Thêm kiểu chữ cho placeholder */
+}
+
+/*Select*/
+select {
+    width: 200px; /* Đặt chiều rộng của select */
+    padding: 10px; /* Thêm khoảng cách bên trong */
+    border: 1px solid #ccc; /* Đặt viền mỏng và màu sáng */
+    border-radius: 4px; /* Bo tròn các góc */
+    font-size: 16px; /* Kích thước chữ trong select */
+    background-color: #fff; /* Màu nền trắng */
+    appearance: none; /* Loại bỏ kiểu mặc định của trình duyệt (tuỳ chọn cho một số trình duyệt) */
+    -webkit-appearance: none; /* Loại bỏ kiểu mặc định của trình duyệt Webkit */
+    -moz-appearance: none; /* Loại bỏ kiểu mặc định của trình duyệt Firefox */
+    cursor: pointer; /* Đổi con trỏ khi hover */
+}
+
+select:focus {
+    border-color: #007bff; /* Đổi màu viền khi focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Thêm hiệu ứng shadow khi focus */
+}
+
+/*Button*/
+button {
+    margin-left: 15px;
+    background-color: #007bff; /* Màu nền của nút */
+    color: white; /* Màu chữ của nút */
+    font-size: 16px; /* Kích thước chữ */
+    padding: 10px 20px; /* Khoảng cách trong nút (padding) */
+    border: none; /* Bỏ viền mặc định */
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    cursor: pointer; /* Đổi con trỏ khi hover vào nút */
+    transition: background-color 0.3s, transform 0.2s; /* Thêm hiệu ứng chuyển màu nền và hiệu ứng zoom khi hover */
+}
+
+/* Hiệu ứng khi hover vào nút */
+button:hover {
+    background-color: #0056b3; /* Đổi màu nền khi hover */
+    transform: scale(1.05); /* Tạo hiệu ứng phóng to khi hover */
+}
+
+/* Hiệu ứng khi nút được nhấn */
+button:active {
+    transform: scale(0.98); /* Thu nhỏ nút khi nhấn */
+}
+
+/* Hiệu ứng focus để dễ dàng nhận diện khi người dùng nhấn vào nút */
+button:focus {
+    outline: none; /* Xóa viền mặc định khi focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Thêm hiệu ứng shadow khi focus */
+}
+
+/*Pagination*/
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.pagination a {
+    color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+}
+
+.pagination .page-number.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.footer {
+    height: 200px;
+}
+
+/*Detail Product*/
+.d-flex {
+    display: flex;
+}
+.flex-row {
+    flex-direction: row;
+}
+.flex-col {
+    flex-direction: column;
+}
+.img-detail {
+    width: 400px;
+    max-height: 500px;
+    object-fit: cover;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.items-center {
+    align-items: center;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.w-1200 {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+i {
+    color: #f39c12;
+}
+
+.detail-img {
+    width: 500px;
+    height: auto;
+    object-fit: cover;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.ms-50 {
+    margin-left: 50px;
+}
+.mt-50 {
+    margin-top: 50px;
+}
+
+.border-1 {
+    border: .5px solid gray;
+}
+.b-radius {
+    border-radius: 15px;
+}
+.p-25 {
+    padding: 25px;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.height-200 {
+    height: 200px;
+}

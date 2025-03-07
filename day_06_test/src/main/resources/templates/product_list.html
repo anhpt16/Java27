@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+    <h1>Danh sách sản phẩm</h1>
+    <div class="menu-container">
+        <form action="/" method="GET">
+            <input autocomplete="off" name="keyword" type="text" placeholder="Tìm kiếm .......">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+<!--        <select autocomplete="off">-->
+<!--            <option>Trống</option>-->
+<!--            <option>Giá tăng dần</option>-->
+<!--            <option>Giá giảm dần</option>-->
+<!--        </select>-->
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="card" th:each="product : ${pageResponse.list}">
+                <a class="card-container" th:href="@{/product/{id}(id=${product.id})}">
+                    <img class="card-img" th:src="@{/assets/{filename}(filename=${product.thumbnail})}" alt="Product Image">
+                    <h3 class="card-title" th:text="${product.name}"></h3>
+                    <p th:classappend="${product.priceDiscount != 0 ? 'card-price old-price' : 'card-price new-price'}" th:text="${product.price + ' $'}"></p>
+                    <div th:if="${product.priceDiscount != 0}">
+                        <p class="card-discount-price" th:text="${product.priceDiscount + ' $'}"></p>
+                    </div>
+                    <div class="rating-container">
+                        <i class="fa-solid fa-star"></i>
+                        <p class="card-rating" th:text="${product.rating}"></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <a
+                th:if="${pageResponse.pageCurrent > 1}"
+                th:href="@{?page={page}(page=${pageResponse.pageCurrent -1})}"
+                class="prev">&laquo; Prev</a>
+        <a
+                th:each="page : ${#numbers.sequence(1, pageResponse.pageTotal)}"
+                th:href="${'?page=' + page}"
+                th:text="${page}"
+                th:class="${page == pageResponse.pageCurrent ? 'page-number active' : 'page-number'}"></a>
+
+        <a
+                th:if="${pageResponse.pageCurrent < pageResponse.pageTotal}"
+                th:href="@{?page={page}(page=${pageResponse.pageCurrent + 1})}"
+                class="next">Next &raquo;</a>
+    </div>
+    <div class="footer"></div>
+</body>
+</html>

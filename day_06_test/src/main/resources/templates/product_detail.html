@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body class="w-1200">
+    <h1>Chi tiết: [[${product.name}]]</h1>
+    <div class="d-flex justify-between mt-50">
+        <img class="detail-img flex-1" th:src="@{/assets/{filename}(filename=${product.thumbnail})}" alt="Product Image">
+        <div class="d-flex flex-col flex-1 ms-50">
+            <h2 class="font-roboto text-bold">[[${product.name}]]</h2>
+            <p th:classappend="${product.priceDiscount != 0 ? 'card-price old-price' : 'card-price new-price'}" th:text="${'Giá: ' + product.price + ' $'}"></p>
+            <div th:if="${product.priceDiscount != 0}">
+                <p class="card-discount-price" th:text="${'Giá đã giảm: ' + product.priceDiscount + ' $'}"></p>
+            </div>
+            <div class="d-flex">
+                <i class="fa-solid fa-star"></i>
+                <p class="card-rating font-roboto" th:text="${product.rating}"></p>
+            </div>
+        </div>
+    </div>
+    <h2 class="font-roboto text-bold mt-50">Mô tả</h2>
+    <div class="border-1 b-radius p-25">
+        <p th:text="${product.description}"></p>
+    </div>
+    <h2 class="font-roboto text-bold mt-50">Các sản phẩm liên quan</h2>
+    <div class="container p-0">
+        <div class="row">
+            <div class="card" th:each="product : ${productRelated}">
+                <a class="card-container" th:href="@{/product/{id}(id=${product.id})}">
+                    <img class="card-img height-200" th:src="@{/assets/{filename}(filename=${product.thumbnail})}" alt="Product Image">
+                    <h3 class="card-title" th:text="${product.name}"></h3>
+                    <p th:classappend="${product.priceDiscount != 0 ? 'card-price old-price' : 'card-price new-price'}" th:text="${product.price + ' $'}"></p>
+                    <div th:if="${product.priceDiscount != 0}">
+                        <p class="card-discount-price" th:text="${product.priceDiscount + ' $'}"></p>
+                    </div>
+                    <div class="rating-container">
+                        <i class="fa-solid fa-star"></i>
+                        <p class="card-rating" th:text="${product.rating}"></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+</html>
