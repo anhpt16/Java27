@@ -40,17 +40,17 @@
     <div class="pagination">
         <a
                 th:if="${pageResponse.pageCurrent > 1}"
-                th:href="@{?page={page}(page=${pageResponse.pageCurrent -1})}"
+                th:href="@{?page={page}&keyword={keyword}(page=${pageResponse.pageCurrent - 1}, keyword=${param.keyword})}"
                 class="prev">&laquo; Prev</a>
         <a
                 th:each="page : ${#numbers.sequence(1, pageResponse.pageTotal)}"
-                th:href="${'?page=' + page}"
+                th:href="@{?page={page}&keyword={keyword}(page=${page}, keyword=${param.keyword})}"
                 th:text="${page}"
                 th:class="${page == pageResponse.pageCurrent ? 'page-number active' : 'page-number'}"></a>
 
         <a
                 th:if="${pageResponse.pageCurrent < pageResponse.pageTotal}"
-                th:href="@{?page={page}(page=${pageResponse.pageCurrent + 1})}"
+                th:href="@{?page={page}&keyword={keyword}(page=${pageResponse.pageCurrent + 1}, keyword=${param.keyword})}"
                 class="next">Next &raquo;</a>
     </div>
     <div class="footer"></div>
