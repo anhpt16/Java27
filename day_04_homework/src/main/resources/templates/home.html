@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Webdemo</title>
-    <link rel="stylesheet" th:href="@{./css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <h1>Danh sách các thành phố và danh sách người đang sống tại thành phố</h1>
@@ -20,6 +20,7 @@
                     <th>City</th>
                     <th>Job</th>
                     <th>Salary</th>
+                    <th>Action</th>
                 </tr>
                 <tr th:each="people : ${entry.value}">
                     <td th:text="${people.id}">1</td>
@@ -29,7 +30,10 @@
                     <td th:text="${people.gender}">Male</td>
                     <td th:text="${people.city}">Hà Nội</td>
                     <td th:text="${people.job}">Software Engineer</td>
-                    <td th:text="${people.salary}">1200</td>
+                    <td th:text="${people.salary}">1200
+                    <td>
+                        <a th:href="@{/people/{id}(id=${people.id})}">Xem chi tiết</a>
+                    </td>
                 </tr>
             </table>
         </ul>

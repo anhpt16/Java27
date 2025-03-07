@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webdemo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Chi tiết người dùng</h1>
+<div class="container">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>City</th>
+            <th>Job</th>
+            <th>Salary</th>
+        </tr>
+        <tr>
+            <td th:text="${people.id}">1</td>
+            <td th:text="${people.first_name}">Nguyễn</td>
+            <td th:text="${people.last_name}">Nhật Anh</td>
+            <td th:text="${people.email}">nhatanh1612202@gmail.com</td>
+            <td th:text="${people.gender}">Male</td>
+            <td th:text="${people.city}">Hà Nội</td>
+            <td th:text="${people.job}">Software Engineer</td>
+            <td th:text="${people.salary}">1200</td>
+        </tr>
+    </table>
+</div>
+<h1>Danh sách liên quan</h1>
+<div class="container">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="relatedPeople : ${relatedPeople}">
+            <td th:text="${relatedPeople.id}"></td>
+            <td th:text="${relatedPeople.first_name}"></td>
+            <td th:text="${relatedPeople.last_name}"></td>
+            <td th:text="${relatedPeople.gender}"></td>
+            <td>
+                <a th:href="@{/people/{id}(id=${people.id})}">Xem chi tiết</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Danh sách người cố độ dài tên dài nhất</h1>
+<h1>Danh sách</h1>
 <div class="container">
   <table>
     <tr>
@@ -18,6 +18,7 @@
       <th>City</th>
       <th>Job</th>
       <th>Salary</th>
+      <th>Action</th>
     </tr>
     <tr th:each="people : ${results}">
       <td th:text="${people.id}">1</td>
@@ -28,6 +29,9 @@
       <td th:text="${people.city}">Hà Nội</td>
       <td th:text="${people.job}">Software Engineer</td>
       <td th:text="${people.salary}">1200</td>
+      <td>
+        <a th:href="@{/people/{id}(id=${people.id})}">Xem chi tiết</a>
+      </td>
     </tr>
   </table>
 </div>
