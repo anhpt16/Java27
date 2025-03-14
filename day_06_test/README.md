@@ -1,6 +1,6 @@
 ##Các chức năng:
 
-1. Xem danh sách sản phẩm
+0.  1. Xem danh sách sản phẩm
 
 ![Xem danh sach san pha,m](./image/danh_sach_san_pham.png)
 
