@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+/* Header */
+.bg-nav, .bg-footer {
+    background-color: #1f1d1e;
+}
+
+.logo-image {
+    width: 100px;
+    height: 50px;
+    object-fit: cover;
+}
+.thumbnail-movie-detail {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.text-movie-detail {
+    font-size: 16px;
+    font-weight: 300;
+}
+.logo-size-footer {
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+}
+.des-logo-footer {
+    font-size: 14px;
+    font-weight: 300;
+}
+.title-footer {
+    font-size: 16px;
+    font-weight: 500;
+}
+.list-footer {
+    font-size: 14px;
+    font-weight: 300;
+}
+.list-footer > a > i {
+    font-size: 40px;
+}
+
+.navbar-header .nav-item {
+    margin-left: 10px;
+}
+
+/* Content */
+.content {
+    margin-top: 20px;
+}
+
+.section-title h2{
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.title-movie-detail {
+    font-weight: 500;
+    font-size: 26px;
+}
+
+.card-item img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-item img:hover {
+    transform: scale(1.1);
+}
+
+.card-item h3 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.card-new h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.card-item > a {
+    display: block;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.card-new {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.card-new img {
+    width: 30%;
+    height: 180px;
+    object-fit: cover;
+    flex-shrink: 0;
+    
+}
+
+.card-new .card-content {
+    width: 70%;
+}
+
+.card-new .text-truncate {
+    width: 100%;
+    max-height: 3.2em;
+    white-space: normal;
+}
+
+.container-image {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.radius-6 {
+    border-radius: 6px;
+}
+
+.avatar {
+    padding: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: .5px solid #e6ebf0;
+}
+.avatar-name {
+    font-size: 18px;
+    font-weight: 400;
+}
+.fs-10 {
+    font-size: 14px;
+    font-weight: 500;
+}
+.radius-6 {
+    border-radius: 4px;
+}
