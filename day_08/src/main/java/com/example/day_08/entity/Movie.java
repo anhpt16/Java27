@@ -2,10 +2,16 @@ package com.example.day_08.entity;
 
 import com.example.day_08.model.enums.MovieType;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
 @Table(name = "tbl_movie")
 public class Movie {
 
@@ -13,7 +19,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     private String slug;
 
@@ -30,6 +36,7 @@ public class Movie {
     @Column(columnDefinition = "double default 5.0")
     private Double rating;
     private Boolean status;
+    private String trailer;
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
@@ -42,4 +49,5 @@ public class Movie {
 
     @Column(name = "country_id")
     private Integer countryId;
+
 }
