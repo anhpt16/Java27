@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </head>
 <body>
+    <div class="modal fade" id="trailer-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <iframe width="560" height="315" frameborder="0" allow="fullscreen" th:src="@{${movieDetail.trailer}}"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-nav">
         <div class="container">
           <a class="navbar-brand" href="#">
@@ -64,23 +76,28 @@
     <div class="content">
         <div class="container">
             <div class="d-flex gap-2 movie-url mb-3 ">
-                <a class="nav-link text-primary" href="#">Trang chủ</a>
+                <a class="nav-link text-primary" th:href="@{/}">Trang chủ</a>
                 <p> / </p>
-                <a class="nav-link text-primary" href="#">Phim chiếu rạp</a>
+                <a class="nav-link text-primary" th:href="@{{type}(type=${movieDetail.typeUri})}" th:text="${movieDetail.type}"></a>
                 <p> / </p>
-                <a class="nav-link text-dark" href="#">Trạng tí phiêu lưu ký</a>
+                <a class="nav-link text-dark" href="#" th:text="${movieDetail.name}"></a>
             </div>
             <div class="row">
-                    <div class="col-4">
+                    <div class="col-4 position-relative">
                         <a class="container-image" href="#">
-                            <img class="thumbnail-movie-detail" th:src="@{/assets/default_movie_thumbnail.webp}" alt="IMAGE">
+                            <img class="thumbnail-movie-detail" th:src="@{${movieDetail.thumbnail}}" alt="IMAGE">
                         </a>
+                        <div class="position-absolute bottom-0 start-0 end-0 d-flex justify-content-center align-items-center container-button-trailer">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#trailer-modal" class="button-trailer d-flex justify-content-center align-items-center">
+                                <i class="fa-solid fa-circle-play me-2" style="color: #ff0000;"></i>
+                                Trailer</button>
+                        </div>
                     </div>
                     <div class="col-8">
                         <div class="d-flex justify-content-between">
-                            <h2 class="title-movie-detail">Trạng tí phiêu lưu ký</h2>
+                            <h2 class="title-movie-detail" th:text="${movieDetail.name}"></h2>
                             <div>
-                                <span>9.8</span>
+                                <span th:text="${movieDetail.rating}"></span>
                                 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
                             </div>
                         </div>
@@ -88,41 +105,33 @@
                             <div class="row mb-3">
                                 <div class="col-3 text-movie-detail">Thể loại</div>
                                 <div class="col-9 d-flex flex-wrap">
-                                    <a class="nav-link text-movie-detail" href="#">Phiêu lưu,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Viễn tưởng,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Gia đình&nbsp;</a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-3 text-movie-detail">Năm sản xuất</div>
                                 <div class="col-9">
-                                    <a class="nav-link text-movie-detail" href="#">2023</a>
+                                    <a class="nav-link text-movie-detail" href="#" th:text="${movieDetail.releaseYear}"></a>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-3 text-movie-detail">Quốc gia</div>
                                 <div class="col-9">
-                                    <a class="nav-link text-movie-detail" href="#">Phần Lan</a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-3 text-movie-detail">Đạo diễn</div>
                                 <div class="col-9">
-                                    <a class="nav-link text-movie-detail" href="#">Huỳnh Hữu Khang</a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3 text-movie-detail">Diễn viên</div>
                                 <div class="col-9 d-flex flex-wrap">
-                                    <a class="nav-link text-movie-detail" href="#">Xuân Nghi,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Oanh Kiều,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Mona Bảo Trâm,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Trần Đức Anh,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Vương Hoàng Long,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Trung Dân,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Phi Nhung,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Hoàng Phi,&nbsp;</a>
-                                    <a class="nav-link text-movie-detail" href="#">Hiếu Hiền&nbsp;</a>
+                                    <a class="nav-link text-movie-detail" href="#"></a>
                                 </div>
                             </div>
                         </div>
@@ -134,16 +143,8 @@
             <div class="container">
                 <div class="section-title">
                     <h2>Nội dung</h2>
-                    <p class="text-movie-detail mt-3 p-3 bg-light rounded">
-                        Trạng Tí Phiêu Lưu Kí là chuyến phiêu lưu vượt ngoài trí tưởng tượng của bộ tứ Tí - Sửu - Dần -
-                            Mẹo khi phải cùng nhau vượt qua rất nhiều thử 
-                        thách để khám phá bí ẩn về cha Tí. Truyền thuyết Hai Hậu sinh ra Tí vì tựa vào cục đá 
-                        nghe thật khó tin, nên Tí trở thành tâm điểm chọc phá và coi thường bởi những người xấu tính trong làng.
-                            Trên hành trình, bốn đứa trẻ nhiều lần gặp rắc rối, hiểu lầm, tai nạn. 
-                        Và bất ngờ, bốn đứa trẻ lại bị sơn tặc bắt cóc và bị ép đối đầu trước một âm mưu không thể lường trước được.
-                            Nhưng, nhờ những trải nghiệm và có bạn bè bên cạnh những lúc khó khăn đó, Tí dần hoàn thiện tính cách bản thân,
-                            bớt háo thắng và biết quan tâm đến người khác, hiểu rằng, 
-                        cái lý đôi khi không quan trọng bằng cái tình mà con người ta dành cho nhau. 
+                    <p class="text-movie-detail mt-3 p-3 bg-light rounded" th:text="${movieDetail.description}">
+
                     </p>
                 </div>
             </div>
@@ -154,41 +155,11 @@
                     <h2>Phim đề xuất</h2>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
+                    <div class="col-2 card-item" th:each="relatedMovie : ${relatedMovies}">
+                        <a th:href="@{/phim/{slug}(slug=${relatedMovie.slug})}">
+                            <img th:src="@{${relatedMovie.thumbnail}}">
                         </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
-                    </div>
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
-                        </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
-                    </div>
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
-                        </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
-                    </div>
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
-                        </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
-                    </div>
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
-                        </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
-                    </div>
-                    <div class="col-2 card-item">
-                        <a href="#">
-                            <img th:src="@{/assets/default_movie_thumbnail.webp}">
-                        </a>
-                        <h3 class="mt-3 mb-2">Tiêu đề phim</h3>
+                        <h3 class="mt-3 mb-2" th:text="${relatedMovie.name}"></h3>
                     </div>
                 </div>
             </div>

@@ -19,7 +19,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByNameContainingIgnoreCase(String name);
 
     // 🔹 2️⃣ Tìm kiếm phim theo slug
-    Optional<Movie> findBySlug(String slug);
+    @Query("SELECT m FROM Movie m WHERE m.slug = :slug AND (:status IS NULL OR m.status = :status)")
+    Optional<Movie> findBySlug(@Param("slug") String slug, @Param("status") Boolean status);
 
     // 🔹 3️⃣ Lọc phim theo năm phát hành
     List<Movie> findByReleaseYear(Integer releaseYear);
@@ -51,8 +52,12 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query("SELECT m FROM Movie m WHERE m.publishedAt BETWEEN :startDate AND :endDate")
     List<Movie> findMoviesBetweenDates(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-    @Query(value = "SELECT m FROM Movie m ORDER BY m.rating DESC")
+    @Query(value = "SELECT m FROM Movie m WHERE m.status = true ORDER BY m.rating DESC")
     List<Movie> findMoviesByRating(Pageable pageable);
 
-    Page<Movie> findAllByType (MovieType type, Pageable pageable);
+    @Query(value = "SELECT m FROM Movie m WHERE m.status = true AND m.type = :type ORDER BY m.rating DESC")
+    List<Movie> findRelatedMovie(MovieType type, Pageable pageable);
+
+
+    Page<Movie> findAllByTypeAndStatus(MovieType type, Boolean status ,Pageable pageable);
 }

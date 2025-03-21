@@ -149,3 +149,16 @@ p {
 .radius-6 {
     border-radius: 4px;
 }
+
+.container-button-trailer {
+    height: 60px;
+}
+
+.button-trailer {
+    border-radius: 6px;
+    height: 30px;
+    border: none;
+    padding: 10px 20px;
+    background-color: rgba( 33, 47, 61, 0.2);
+    color: #fff
+}
