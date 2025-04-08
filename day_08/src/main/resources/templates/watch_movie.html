@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+<div class="modal fade" id="trailer-modal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <iframe width="560" height="315" frameborder="0" allow="fullscreen" th:src="@{${movieDetail.trailer}}"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-nav">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img class="logo-image" th:src="@{/assets/logo.png}" alt="LOGO">
+    </a>
+    <!--          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">-->
+    <!--            <span class="navbar-toggler-icon"></span>-->
+    <!--          </button>-->
+    <div class="collapse navbar-collapse navbar-header" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="#">Trang chủ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#">Phim bộ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#">Phim chiếu rạp</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#">Phim lẻ</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Quốc gia
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Thể loại
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#">Mua phim</a>
+        </li>
+      </ul>
+    </div>
+
+    <a class="nav-link text-white" href="#">Đăng nhập</a>
+
+  </div>
+</nav>
+<div class="content">
+  <div class="container">
+    <div class="d-flex gap-2 movie-url mb-3 ">
+      <a class="nav-link text-primary" th:href="@{/}">Trang chủ</a>
+      <p> / </p>
+      <a class="nav-link text-primary" th:href="@{{type}(type=${movieDetail.typeUri})}" th:text="${movieDetail.type}"></a>
+      <p> / </p>
+      <a class="nav-link text-dark" href="#" th:text="${movieDetail.name}"></a>
+    </div>
+    <div class="row">
+      <div class="col-4 position-relative">
+        <a class="container-image" href="#">
+          <img class="thumbnail-movie-detail" th:src="@{'/api/images/thumbnail/' + ${movieDetail.thumbnail}}" alt="Movie Thumbnail">
+        </a>
+        <div class="position-absolute bottom-0 start-0 end-0 d-flex justify-content-center align-items-center container-button-trailer">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#trailer-modal" class="button-trailer d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-circle-play me-2" style="color: #ff0000;"></i>
+            Trailer</button>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="d-flex justify-content-between">
+          <h2 class="title-movie-detail" th:text="${movieDetail.name}"></h2>
+          <div>
+            <span th:text="${movieDetail.rating}"></span>
+            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+          </div>
+        </div>
+        <div class="bg-light p-4 mt-2 radius-6">
+          <div class="row mb-3">
+            <div class="col-3 text-movie-detail">Thể loại</div>
+            <div class="col-9 d-flex flex-wrap">
+              <a class="nav-link text-movie-detail" th:each="genre : ${movieDetail.genres}" href="#" th:text="${genre.name}"></a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-3 text-movie-detail">Năm sản xuất</div>
+            <div class="col-9">
+              <a class="nav-link text-movie-detail" href="#" th:text="${movieDetail.releaseYear}"></a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-3 text-movie-detail">Quốc gia</div>
+            <div class="col-9">
+              <a class="nav-link text-movie-detail" href="#" th:text="${movieDetail.country.name}"></a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-3 text-movie-detail">Đạo diễn</div>
+            <div class="col-9">
+              <a class="nav-link text-movie-detail" th:each="director : ${movieDetail.directors}" href="#" th:text="${director.name}"></a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 text-movie-detail">Diễn viên</div>
+            <div class="col-9 d-flex flex-wrap">
+              <a class="nav-link text-movie-detail" th:each="actor : ${movieDetail.actors}" href="#" th:text="${actor.name}"></a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-3 btn btn-danger" href="#" role="button">Xem Phim</a>
+      </div>
+    </div>
+  </div>
+  <section class="pt-4 mb-2 mt-5">
+    <div class="container">
+      <div class="section-title">
+        <div class="d-flex flex-wrap">
+          <a class="btn btn-outline-info mb-2 me-2" th:each="episode : ${movieDetail.episodes}" href="#" th:text="${episode.name}"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="pt-4 pb-4 mt-5">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nội dung</h2>
+        <p class="text-movie-detail mt-3 p-3 bg-light rounded" th:text="${movieDetail.description}">
+
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="pt-4 pb-4 mt-5 bg-light">
+    <div class="container">
+      <div class="section-title d-flex justify-content-between">
+        <h2>Phim đề xuất</h2>
+      </div>
+      <div class="row mt-3">
+        <div class="col-2 card-item" th:each="relatedMovie : ${relatedMovies}">
+          <a th:href="@{/phim/{slug}(slug=${relatedMovie.slug})}">
+            <img th:src="@{${relatedMovie.thumbnail}}">
+          </a>
+          <h3 class="mt-3 mb-2" th:text="${relatedMovie.name}"></h3>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="pt-4 pb-4 ">
+    <div class="container">
+      <div class="section-title d-flex justify-content-between">
+        <h2>Bình luận</h2>
+      </div>
+      <div class="">
+        <p class="text-movie-detail">Vui lòng <a href="#">Đăng nhập</a> để viết bình luận</p>
+      </div>
+      <div class="list-review">
+        <div class="card-review mt-5 mb-5">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
+              <div class="d-flex flex-column align-items-start justify-content-around ms-4">
+                <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                <p class="mb-0 text-movie-detail">
+                  <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  <span>10</span>
+                  <span>/10</span>
+                  <span>&nbsp;Xuất sắc</span>
+                </p>
+              </div>
+            </div>
+            <p class="text-secondary">20/02/2020</p>
+          </div>
+          <p class="review-content text-secondary mt-3 text-movie-detail">
+            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+          </p>
+        </div>
+        <div class="card-review mt-5 mb-5">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
+              <div class="d-flex flex-column align-items-start justify-content-around ms-4">
+                <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                <p class="mb-0 text-movie-detail">
+                  <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  <span>10</span>
+                  <span>/10</span>
+                  <span>&nbsp;Xuất sắc</span>
+                </p>
+              </div>
+            </div>
+            <p class="text-secondary">20/02/2020</p>
+          </div>
+          <p class="review-content text-secondary mt-3 text-movie-detail">
+            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+          </p>
+        </div>
+        <div class="card-review mt-5 mb-5">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
+              <div class="d-flex flex-column align-items-start justify-content-around ms-4">
+                <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                <p class="mb-0 text-movie-detail">
+                  <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  <span>10</span>
+                  <span>/10</span>
+                  <span>&nbsp;Xuất sắc</span>
+                </p>
+              </div>
+            </div>
+            <p class="text-secondary">20/02/2020</p>
+          </div>
+          <p class="review-content text-secondary mt-3 text-movie-detail">
+            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+          </p>
+        </div>
+        <div class="card-review mt-5 mb-5">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
+              <div class="d-flex flex-column align-items-start justify-content-around ms-4">
+                <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                <p class="mb-0 text-movie-detail">
+                  <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  <span>10</span>
+                  <span>/10</span>
+                  <span>&nbsp;Xuất sắc</span>
+                </p>
+              </div>
+            </div>
+            <p class="text-secondary">20/02/2020</p>
+          </div>
+          <p class="review-content text-secondary mt-3 text-movie-detail">
+            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+          </p>
+        </div>
+        <div class="card-review mt-5 mb-5">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
+              <div class="d-flex flex-column align-items-start justify-content-around ms-4">
+                <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                <p class="mb-0 text-movie-detail">
+                  <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  <span>10</span>
+                  <span>/10</span>
+                  <span>&nbsp;Xuất sắc</span>
+                </p>
+              </div>
+            </div>
+            <p class="text-secondary">20/02/2020</p>
+          </div>
+          <p class="review-content text-secondary mt-3 text-movie-detail">
+            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-4 mb-3">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center gap-2">
+          <li class="page-item"><a class="page-link text-dark" href="#"><i class="fa-solid fa-caret-left"></i></a></li>
+          <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+          <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+          <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+          <li class="page-item"><a class="page-link text-dark" href="#"><i class="fa-solid fa-caret-left fa-rotate-180"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</div>
+<footer class="bg-footer">
+  <div class="container">
+    <div class="row pt-5 pb-5">
+      <div class="col-4 ps-5 pe-5">
+        <a class="d-flex justify-content-center" href="#">
+          <img class="logo-size-footer" th:src="@{/assets/logo.png}" alt="LOGO">
+        </a>
+        <p class="text-center text-white-50 des-logo-footer"> Motchill - Xem phim Online Vietsub chất lượng cao
+          miễn phí, nhiều thể loại phim phong phú, đặc sắc, giao diện trực quan,
+          thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các bộ phim mới.
+        </p>
+      </div>
+      <div class="col-2">
+        <ul class="d-flex flex-column list-unstyled">
+          <li class="text-white list title-footer mb-3">DANH MỤC</li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim chiếu rạp</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Tin tức</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim bộ</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim lẻ</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">TV Show</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <ul class="d-flex flex-column list-unstyled">
+          <li class="text-white list title-footer mb-3">THỂ LOẠI</li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim cổ trang</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim đam mỹ</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim bách hợp</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim viễn tưởng</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Phim hoạt hình</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <ul class="d-flex flex-column list-unstyled">
+          <li class="text-white list title-footer mb-3">ĐIỀU KHOẢN</li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">DMCA</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Liên hệ</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Privacy</a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">Terms of Service</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-2">
+        <ul class="d-flex flex-column align-items-center list-unstyled">
+          <li class="text-white list title-footer mb-3">SOCIAL</li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">
+              <i class="fa-brands fa-square-facebook" style="color: #0517f5;"></i>
+            </a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">
+              <i class="fa-brands fa-square-twitter" style="color: #226fe1;"></i>
+            </a>
+          </li>
+          <li class="list-footer mb-3">
+            <a class="nav-link text-white" href="#">
+              <i class="fa-brands fa-youtube" style="color: #fe362c;"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

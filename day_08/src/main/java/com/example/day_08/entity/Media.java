@@ -12,9 +12,6 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
-
     @Enumerated(EnumType.STRING)
     private MediaType type;
 
@@ -31,4 +28,8 @@ public class Media {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

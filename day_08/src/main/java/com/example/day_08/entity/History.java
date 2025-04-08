@@ -11,12 +11,6 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
-
-    @Column(name = "movie_id", nullable = false)
-    private Integer movieId;
-
     @Column(nullable = false)
     private Long duration;
 
@@ -25,4 +19,12 @@ public class History {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movie;
 }

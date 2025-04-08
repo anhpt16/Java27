@@ -1,10 +1,15 @@
 package com.example.day_08.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tbl_country")
 public class Country {
     @Id
@@ -13,6 +18,7 @@ public class Country {
 
     @Column(nullable = false, unique = true)
     private String name;
+
     @Column(nullable = false, unique = true)
     private String slug;
 
@@ -21,4 +27,7 @@ public class Country {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "country")
+    private List<Movie> movies;
 }

@@ -3,6 +3,7 @@ package com.example.day_08.controller;
 import com.example.day_08.model.enums.MovieType;
 import com.example.day_08.model.response.MovieDetailResponse;
 import com.example.day_08.model.response.ShortMovieResponse;
+import com.example.day_08.service.FavoriteService;
 import com.example.day_08.service.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,34 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
+    private final FavoriteService favoriteService;
 
     @GetMapping("/{slug}")
     public String movie(
         @PathVariable String slug,
+        Model model
+    ) {
+        Integer defaultUserId = 1;
+        // Get Movie Detail
+        MovieDetailResponse movieDetailResponse = movieService.getMovieDetailBySlug(slug);
+        if (movieDetailResponse == null) {
+            return "not_found";
+        }
+        // Check if favorite movie
+        boolean isFavorite = favoriteService.existFavoriteMovieByUser(defaultUserId, movieDetailResponse.getId());
+
+        // Get Movie Related
+        List<ShortMovieResponse> relatedMovies = movieService.getRelatedMovies(MovieType.fromValue(movieDetailResponse.getType()), 6);
+        model.addAttribute("movieDetail", movieDetailResponse);
+        model.addAttribute("isFavorite", isFavorite);
+        model.addAttribute("relatedMovies", relatedMovies);
+        return "movie_detail";
+    }
+
+    @GetMapping("/xem-phim/{slug}/{id}")
+    public String watchMovie(
+        @PathVariable String slug,
+        @PathVariable Integer id,
         Model model
     ) {
         // Get Movie Detail
@@ -34,6 +59,6 @@ public class MovieController {
         List<ShortMovieResponse> relatedMovies = movieService.getRelatedMovies(MovieType.fromValue(movieDetailResponse.getType()), 6);
         model.addAttribute("movieDetail", movieDetailResponse);
         model.addAttribute("relatedMovies", relatedMovies);
-        return "movie_detail";
+        return "watch_movie";
     }
 }

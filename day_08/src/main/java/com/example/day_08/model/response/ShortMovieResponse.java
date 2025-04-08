@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ShortMovieResponse {
+    private final Integer id;
     private final String name;
     private final String slug;
     private final String type;

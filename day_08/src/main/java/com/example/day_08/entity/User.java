@@ -2,9 +2,14 @@ package com.example.day_08.entity;
 
 import com.example.day_08.model.enums.UserRole;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "tbl_user")
 public class User {
@@ -39,4 +44,19 @@ public class User {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user")
+    private List<Media> medias;
+
+    @OneToMany(mappedBy = "user")
+    private List<History> histories;
+
+    @OneToMany(mappedBy = "user")
+    private List<Favorite> favorites;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 }

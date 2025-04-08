@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div th:fragment="footer">
+  <footer class="bg-footer">
+    <div class="container">
+      <div class="row pt-5 pb-5">
+        <div class="col-4 ps-5 pe-5">
+          <a class="d-flex justify-content-center" th:href="@{/}">
+            <img class="logo-size-footer" th:src="@{/assets/logo.png}" alt="LOGO">
+          </a>
+          <p class="text-center text-white-50 des-logo-footer"> Motchill - Xem phim Online Vietsub chất lượng cao
+            miễn phí, nhiều thể loại phim phong phú, đặc sắc, giao diện trực quan,
+            thuận tiện, tốc độ tải nhanh, thường xuyên cập nhật các bộ phim mới.
+          </p>
+        </div>
+        <div class="col-2">
+          <ul class="d-flex flex-column list-unstyled">
+            <li class="text-white list title-footer mb-3">DANH MỤC</li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" th:href="@{/phim-chieu-rap}">Phim chiếu rạp</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" th:href="@{/tin-tuc}">Tin tức</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" th:href="@{/phim-bo}">Phim bộ</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" th:href="@{/phim-le}">Phim lẻ</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">TV Show</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-2">
+          <ul class="d-flex flex-column list-unstyled">
+            <li class="text-white list title-footer mb-3">THỂ LOẠI</li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Phim cổ trang</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Phim đam mỹ</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Phim bách hợp</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Phim viễn tưởng</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Phim hoạt hình</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-2">
+          <ul class="d-flex flex-column list-unstyled">
+            <li class="text-white list title-footer mb-3">ĐIỀU KHOẢN</li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">DMCA</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Liên hệ</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Privacy</a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">Terms of Service</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-2">
+          <ul class="d-flex flex-column align-items-center list-unstyled">
+            <li class="text-white list title-footer mb-3">SOCIAL</li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">
+                <i class="fa-brands fa-square-facebook" style="color: #0517f5;"></i>
+              </a>
+            </li>
+            <li class="list-footer mb-3 ">
+              <a class="nav-link text-white" href="#">
+                <i class="fa-brands fa-square-twitter" style="color: #226fe1;"></i>
+              </a>
+            </li>
+            <li class="list-footer mb-3">
+              <a class="nav-link text-white" href="#">
+                <i class="fa-brands fa-youtube" style="color: #fe362c;"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

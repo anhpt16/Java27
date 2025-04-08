@@ -1,10 +1,15 @@
 package com.example.day_08.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tbl_actor")
 public class Actor {
     @Id
@@ -27,4 +32,7 @@ public class Actor {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "actors")
+    private List<Movie> movies;
 }
