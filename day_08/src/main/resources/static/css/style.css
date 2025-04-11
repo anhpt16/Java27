@@ -204,3 +204,10 @@ p {
 .remove-favorite:hover{
     color: red !important;
 }
+
+.active-star {
+    color: #FFD43B !important;
+}
+.choose-star {
+    color: #FFD43B !important;
+}

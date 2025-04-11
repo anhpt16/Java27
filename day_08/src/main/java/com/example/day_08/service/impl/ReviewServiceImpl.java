@@ -5,6 +5,7 @@ import com.example.day_08.entity.Review;
 import com.example.day_08.entity.User;
 import com.example.day_08.model.request.CreateReviewRequest;
 import com.example.day_08.model.request.UpdateReviewRequest;
+import com.example.day_08.model.response.ReviewResponse;
 import com.example.day_08.repository.MovieRepository;
 import com.example.day_08.repository.ReviewRepository;
 import com.example.day_08.repository.UserRepository;
@@ -13,6 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,9 +27,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Override
-    public Review createReview(CreateReviewRequest request) {
-        Integer userId = 1;
-
+    public Review createReview(CreateReviewRequest request, Integer userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy user có id: " + userId));
 
@@ -35,8 +37,8 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = new Review();
         review.setUser(user);
         review.setMovie(movie);
-        review.setRating(review.getRating());
-        review.setContent(review.getContent());
+        review.setRating(request.getRating());
+        review.setContent(request.getContent());
         review.setCreatedAt(LocalDateTime.now());
         review.setUpdatedAt(LocalDateTime.now());
 
@@ -48,11 +50,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review updateReview(UpdateReviewRequest request) {
-        Integer userId = 1;
-
+    public Review updateReview(UpdateReviewRequest request, Integer userId) {
         Review review = reviewRepository.findById(request.getReviewId())
-            .orElseThrow(() -> new RuntimeException("Không tìm thấy review_id: " + request.getReviewId()));
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy reviewId: " + request.getReviewId()));
 
         if (userId.intValue() != review.getUser().getId().intValue()) {
             throw new RuntimeException("Không có quyền sửa bình luận userId/reviewId: " + userId + "/" + request.getReviewId());
@@ -67,5 +67,24 @@ public class ReviewServiceImpl implements ReviewService {
             throw new RuntimeException("Cập nhật thất bại userId/reviewId: " + userId + "/" + request.getReviewId());
         }
         return review;
+    }
+
+    @Override
+    public List<ReviewResponse> getReviews(Integer movieId) {
+        Movie movie = movieRepository.findByIdAndStatusTrue(movieId)
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy movieId: " + movieId));
+        List<Review> reviews = reviewRepository.findByMovieId(movieId);
+        if (reviews.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return reviews.stream()
+            .map(review -> ReviewResponse.builder()
+                    .id(review.getId())
+                    .name(review.getUser().getDisplayName())
+                    .rating(review.getRating())
+                    .content(review.getContent())
+                    .date(review.getUpdatedAt())
+                    .build())
+            .collect(Collectors.toList());
     }
 }

@@ -9,28 +9,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/review")
+@RestController
+@RequestMapping("/api/reviews")
 @AllArgsConstructor
 public class ReviewApi {
     private final ReviewService reviewService;
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<?> createReview(
         @RequestBody CreateReviewRequest request
-        ) {
-        Review review = reviewService.createReview(request);
+    ) {
+        Integer defaultUserId = 1;
+        Review review = reviewService.createReview(request, defaultUserId);
         if (review == null) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(review);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping
     public ResponseEntity<?> updateReview(
-        @PathVariable Integer id,
         @RequestBody UpdateReviewRequest request
     ) {
-        Review review = reviewService.updateReview(request);
+        Integer defaultUserId = 1;
+        Review review = reviewService.updateReview(request, defaultUserId);
         if (review == null) {
             return ResponseEntity.badRequest().build();
         }

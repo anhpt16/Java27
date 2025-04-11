@@ -23,6 +23,35 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="review-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="review-detail w-100">
+                        <label class="my-2">Đánh giá:</label>
+                        <div class="d-flex justify-content-center align-items-center review-rating">
+                            <i class="fa-solid fa-star" style="color: #666666" th:each="i : ${#numbers.sequence(1, 10)}" th:data-num="${i}"></i>
+                            <span class="ms-3 d-none">
+                                (
+                                <span id="detail-rating"></span>
+                                )
+                            </span>
+                        </div>
+                        <label class="my-2">Bình luận:</label>
+                        <textarea id="detail-content" class="form-control" style="height: 200px;">
+
+                        </textarea>
+                        <div class="d-flex justify-content-end mt-3">
+                            <button id="save-review" class="btn btn-primary">Bình luận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div th:replace="fragments/header :: header"></div>
     <div class="content">
         <div class="container">
@@ -46,7 +75,7 @@
                     </div>
                     <div class="col-8">
                         <div class="d-flex justify-content-between">
-                            <h2 class="title-movie-detail" th:text="${movieDetail.name}"></h2>
+                            <h2 class="title-movie-detail" th:data-id="${movieDetail.id}" th:text="${movieDetail.name}"></h2>
                             <div>
                                 <span th:text="${movieDetail.rating}"></span>
                                 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
@@ -144,114 +173,35 @@
                 <div class="section-title d-flex justify-content-between">
                     <h2>Bình luận</h2>
                 </div>
-                <div class="">
+                <div class="d-flex justify-content-between">
                     <p class="text-movie-detail">Vui lòng <a href="#">Đăng nhập</a> để viết bình luận</p>
+                    <button data-bs-toggle="modal" data-bs-target="#review-modal" class="btn btn-primary p-2">Bình luận</button>
                 </div>
                 <div class="list-review">
-                    <div class="card-review mt-5 mb-5">
+                    <div class="card-review mt-5 mb-5" th:if="${reviews.size() > 0}" th:each="review : ${reviews}" th:data-id="${review.id}">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
                                 <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
                                 <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
+                                    <p class="mb-0 avatar-name" th:text="${review.name}"></p>
                                     <p class="mb-0 text-movie-detail">
                                         <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span>10</span>
+                                        <span th:text="${review.rating}"></span>
                                         <span>/10</span>
-                                        <span>&nbsp;Xuất sắc</span>
+<!--                                        <span>&nbsp;Xuất sắc</span>-->
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-secondary">20/02/2020</p>
+                            <p class="text-secondary" th:text="${#temporals.format(review.date, 'dd/MM/yyyy')}"></p>
                         </div>
-                        <p class="review-content text-secondary mt-3 text-movie-detail">
-                            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
+                        <p class="review-content text-secondary mt-3 text-movie-detail" th:text="${review.content}">
                         </p>
                     </div>
-                    <div class="card-review mt-5 mb-5">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
-                                <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
-                                    <p class="mb-0 text-movie-detail">
-                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span>10</span>
-                                        <span>/10</span>
-                                        <span>&nbsp;Xuất sắc</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-secondary">20/02/2020</p>
-                        </div>
-                        <p class="review-content text-secondary mt-3 text-movie-detail">
-                            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
-                        </p>
-                    </div>
-                    <div class="card-review mt-5 mb-5">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
-                                <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
-                                    <p class="mb-0 text-movie-detail">
-                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span>10</span>
-                                        <span>/10</span>
-                                        <span>&nbsp;Xuất sắc</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-secondary">20/02/2020</p>
-                        </div>
-                        <p class="review-content text-secondary mt-3 text-movie-detail">
-                            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
-                        </p>
-                    </div>
-                    <div class="card-review mt-5 mb-5">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
-                                <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
-                                    <p class="mb-0 text-movie-detail">
-                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span>10</span>
-                                        <span>/10</span>
-                                        <span>&nbsp;Xuất sắc</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-secondary">20/02/2020</p>
-                        </div>
-                        <p class="review-content text-secondary mt-3 text-movie-detail">
-                            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
-                        </p>
-                    </div>
-                    <div class="card-review mt-5 mb-5">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
-                                <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name">Nguyễn Nhật Anh</p>
-                                    <p class="mb-0 text-movie-detail">
-                                        <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span>10</span>
-                                        <span>/10</span>
-                                        <span>&nbsp;Xuất sắc</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-secondary">20/02/2020</p>
-                        </div>
-                        <p class="review-content text-secondary mt-3 text-movie-detail">
-                            hay, cảnh đẹp, diễn viên nhí quá dễ thương, xuất sắc
-                        </p>
-                    </div>
+                    <p class="text-center text-dark-emphasis fs-18" th:unless="${reviews.size() > 0}">Chưa có bình luận nào</p>
                 </div>
             </div>
             <div class="container mt-4 mb-3">
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example" th:if="${reviews.size() > 0}">
                     <ul class="pagination d-flex justify-content-center gap-2">
                       <li class="page-item"><a class="page-link text-dark" href="#"><i class="fa-solid fa-caret-left"></i></a></li>
                       <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
