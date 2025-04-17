@@ -29,6 +29,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
 
     Page<Movie> findAllByTypeAndStatus(MovieType type, Boolean status ,Pageable pageable);
+    Page<Movie> findAll(Pageable pageable);
 
     Optional<Movie> findByIdAndStatusTrue(Integer id);
 

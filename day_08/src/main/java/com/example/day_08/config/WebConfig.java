@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                 "/api/reviews", "/api/reviews/**",
                 "/phim-yeu-thich", "/api/favorites", "api/favorites/**");
 
-        registry.addInterceptor(authorizationInterceptor)
-            .addPathPatterns("/api/admin/**", "/admin/**");
+//        registry.addInterceptor(authorizationInterceptor)
+//            .addPathPatterns("/api/admin/**", "/admin/**");
     }
 }

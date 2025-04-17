@@ -1,6 +1,7 @@
 package com.example.day_08.entity;
 
 import com.example.day_08.model.enums.EpisodeStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,5 +43,6 @@ public class Episode {
 
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
+    @JsonIgnore
     private Movie movie;
 }
