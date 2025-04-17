@@ -11,5 +11,6 @@ import java.util.List;
 public interface ReviewService {
     Review createReview(CreateReviewRequest request, Integer userId);
     Review updateReview(UpdateReviewRequest request, Integer userId);
+    boolean deleteReview(Integer reviewId, Integer userId);
     List<ReviewResponse> getReviews(Integer movieId);
 }

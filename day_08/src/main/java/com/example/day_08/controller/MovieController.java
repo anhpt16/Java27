@@ -1,5 +1,7 @@
 package com.example.day_08.controller;
 
+import com.example.day_08.model.dto.UserContext;
+import com.example.day_08.model.dto.UserDTO;
 import com.example.day_08.model.enums.MovieType;
 import com.example.day_08.model.response.MovieDetailResponse;
 import com.example.day_08.model.response.ReviewResponse;
@@ -30,21 +32,25 @@ public class MovieController {
         @PathVariable String slug,
         Model model
     ) {
-        Integer defaultUserId = 1;
+        UserDTO currentUser = UserContext.getUser();
+
         // Get Movie Detail
         MovieDetailResponse movieDetailResponse = movieService.getMovieDetailBySlug(slug);
         if (movieDetailResponse == null) {
             return "not_found";
         }
         // Check if favorite movie
-        boolean isFavorite = favoriteService.existFavoriteMovieByUser(defaultUserId, movieDetailResponse.getId());
+        if (currentUser != null) {
+            Integer userId = currentUser.getId();
+            boolean isFavorite = favoriteService.existFavoriteMovieByUser(userId, movieDetailResponse.getId());
+            model.addAttribute("isFavorite", isFavorite);
+        }
         // Get Movie Related
         List<ShortMovieResponse> relatedMovies = movieService.getRelatedMovies(MovieType.fromValue(movieDetailResponse.getType()), 6);
         // Get Reviews
         List<ReviewResponse> reviews = reviewService.getReviews(movieDetailResponse.getId());
 
         model.addAttribute("movieDetail", movieDetailResponse);
-        model.addAttribute("isFavorite", isFavorite);
         model.addAttribute("relatedMovies", relatedMovies);
         model.addAttribute("reviews", reviews);
 

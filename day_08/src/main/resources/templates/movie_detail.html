@@ -41,11 +41,11 @@
                             </span>
                         </div>
                         <label class="my-2">Bình luận:</label>
-                        <textarea id="detail-content" class="form-control" style="height: 200px;">
+                        <textarea id="detail-content" class="form-control" autocomplete="off" style="height: 200px;">
 
                         </textarea>
                         <div class="d-flex justify-content-end mt-3">
-                            <button id="save-review" class="btn btn-primary">Bình luận</button>
+                            <button id="save-review" data-action="add" data-reviewid="" type="button" class="btn btn-primary">Bình luận</button>
                         </div>
                     </div>
                 </div>
@@ -120,17 +120,25 @@
                             </div>
                         </div>
                         <a class="mt-3 btn btn-danger" href="" role="button">Xem Phim</a>
-                        <th:block th:if="${isFavorite}">
-                            <button class="mt-3 ms-2 btn btn-favorite" th:data-favorite="${isFavorite}" th:data-id="${movieDetail.id}">
-                                <i id="heartIcon" class="fa-solid fa-heart" style="color: #ef255c;"></i>
-                                <span class="ms-2">Đã thích</span>
-                            </button>
+                        <th:block th:if="${isFavorite != null}">
+                            <th:block th:if="${isFavorite}">
+                                <button class="mt-3 ms-2 btn btn-favorite" th:data-favorite="${isFavorite}" th:data-id="${movieDetail.id}">
+                                    <i id="heartIcon" class="fa-solid fa-heart" style="color: #ef255c;"></i>
+                                    <span class="ms-2">Đã thích</span>
+                                </button>
+                            </th:block>
+                            <th:block th:if="${!isFavorite}">
+                                <button class="mt-3 ms-2 btn btn-favorite" th:data-favorite="${isFavorite}" th:data-id="${movieDetail.id}">
+                                    <i class="fa-regular fa-heart" style="color: #ef255c;"></i>
+                                    <span class="ms-2">Yêu thích</span>
+                                </button>
+                            </th:block>
                         </th:block>
-                        <th:block th:if="${!isFavorite}">
-                            <button class="mt-3 ms-2 btn btn-favorite" th:data-favorite="${isFavorite}" th:data-id="${movieDetail.id}">
-                                <i class="fa-regular fa-heart" style="color: #ef255c;"></i>
-                                <span class="ms-2">Yêu thích</span>
-                            </button>
+                        <th:block th:unless="${isFavorite != null}">
+                                <button class="mt-3 ms-2 btn btn-favorite">
+                                    <i class="fa-regular fa-heart" style="color: #ef255c;"></i>
+                                    <span class="ms-2">Yêu thích</span>
+                                </button>
                         </th:block>
                     </div>
             </div>          
@@ -174,8 +182,8 @@
                     <h2>Bình luận</h2>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <p class="text-movie-detail">Vui lòng <a href="#">Đăng nhập</a> để viết bình luận</p>
-                    <button data-bs-toggle="modal" data-bs-target="#review-modal" class="btn btn-primary p-2">Bình luận</button>
+                    <p th:if="${session.currentUser == null}" class="text-movie-detail">Vui lòng <a href="#">Đăng nhập</a> để viết bình luận</p>
+                    <button th:unless="${session.currentUser == null}" data-bs-toggle="modal" data-bs-target="#review-modal" class="btn btn-primary p-2">Bình luận</button>
                 </div>
                 <div class="list-review">
                     <div class="card-review mt-5 mb-5" th:if="${reviews.size() > 0}" th:each="review : ${reviews}" th:data-id="${review.id}">
@@ -183,16 +191,24 @@
                             <div class="d-flex">
                                 <img class="avatar" th:src="@{/assets/avatar_default.png}" alt="AVATAR">
                                 <div class="d-flex flex-column align-items-start justify-content-around ms-4">
-                                    <p class="mb-0 avatar-name" th:text="${review.name}"></p>
+                                    <p class="mb-0 avatar-name" th:data-id="${review.userId}" th:text="${review.name}"></p>
                                     <p class="mb-0 text-movie-detail">
                                         <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                                        <span th:text="${review.rating}"></span>
+                                        <span class="rating" th:data-rate="${review.rating}" th:text="${review.rating}"></span>
                                         <span>/10</span>
 <!--                                        <span>&nbsp;Xuất sắc</span>-->
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-secondary" th:text="${#temporals.format(review.date, 'dd/MM/yyyy')}"></p>
+                            <div class="d-flex flex-column">
+                                <p class="text-secondary" th:text="${#temporals.format(review.date, 'dd/MM/yyyy')}"></p>
+                                <th:block th:if="${session.currentUser != null}">
+                                    <div th:if="${session.currentUser.getId() == review.userId}">
+                                        <button class="btn btn-warning">Sửa</button>
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </div>
+                                </th:block>
+                            </div>
                         </div>
                         <p class="review-content text-secondary mt-3 text-movie-detail" th:text="${review.content}">
                         </p>
@@ -216,5 +232,9 @@
     <div th:replace="fragments/footer :: footer"></div>
 </body>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:inline="javascript">
+    let currentUser = [[${session.currentUser}]];
+    console.log(currentUser);
+</script>
 <script th:inline="javascript" type="module" src="/js/movie_detail.js"></script>
 </html>

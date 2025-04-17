@@ -1,8 +1,11 @@
 package com.example.day_08.api;
 
 import com.example.day_08.entity.Favorite;
+import com.example.day_08.model.dto.UserContext;
+import com.example.day_08.model.dto.UserDTO;
 import com.example.day_08.model.response.ShortMovieResponse;
 import com.example.day_08.service.FavoriteService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,14 +17,15 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class FavoriteApi {
     private final FavoriteService favoriteService;
+    private final HttpSession session;
 
     @GetMapping
     public Page<ShortMovieResponse> getFavoriteMovies(
         @RequestParam (name = "page", defaultValue = "1") int page,
         @RequestParam (name = "size", defaultValue = "18") int size
     ) {
-        Integer defaultUserId = 1;
-        Page<ShortMovieResponse> favoriteMovies = favoriteService.getFavoriteMoviesByUser(defaultUserId, page - 1, size);
+        Integer userId = UserContext.getUser().getId();
+        Page<ShortMovieResponse> favoriteMovies = favoriteService.getFavoriteMoviesByUser(userId, page - 1, size);
         return favoriteMovies;
     }
 
@@ -29,8 +33,8 @@ public class FavoriteApi {
     public ResponseEntity<?> addToFavoriteMovies(
         @PathVariable Integer movieId
     ) {
-        Integer defaultUserId = 1;
-        Favorite result = favoriteService.addFavoriteMovieByUser(defaultUserId, movieId);
+        Integer userId = UserContext.getUser().getId();
+        Favorite result = favoriteService.addFavoriteMovieByUser(userId, movieId);
         if (result == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Không thể thêm phim vào danh sách phim yêu thích");
         }
@@ -41,8 +45,8 @@ public class FavoriteApi {
     public ResponseEntity<?> deleteFavoriteMovie(
         @PathVariable Integer movieId
     ) {
-        Integer defaultUserId = 1;
-        Boolean result = favoriteService.deleteFavoriteMovieByUser(defaultUserId, movieId);
+        Integer userId = UserContext.getUser().getId();
+        Boolean result = favoriteService.deleteFavoriteMovieByUser(userId, movieId);
         if (result != null && !result) {
             return ResponseEntity.ok().build();
         }
@@ -51,8 +55,8 @@ public class FavoriteApi {
 
     @DeleteMapping
     public ResponseEntity<?> deleteAllFavoriteMovie() {
-        Integer defaultUserId = 1;
-        Boolean result = favoriteService.deleteAllFavoriteMovieByUser(defaultUserId);
+        Integer userId = UserContext.getUser().getId();
+        Boolean result = favoriteService.deleteAllFavoriteMovieByUser(userId);
         if (result != null && result) {
             return ResponseEntity.ok().build();
         }

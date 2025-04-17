@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+
 public class ReviewServiceImpl implements ReviewService {
 
     private final UserRepository userRepository;
@@ -70,6 +71,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public boolean deleteReview(Integer reviewId, Integer userId) {
+        Review review = reviewRepository.findByIdAndUserId(reviewId, userId)
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy reviewId/userId: " + reviewId + "/" + userId));
+        reviewRepository.delete(review);
+        if (reviewRepository.findById(reviewId).isPresent()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public List<ReviewResponse> getReviews(Integer movieId) {
         Movie movie = movieRepository.findByIdAndStatusTrue(movieId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy movieId: " + movieId));
@@ -80,6 +92,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviews.stream()
             .map(review -> ReviewResponse.builder()
                     .id(review.getId())
+                    .userId(review.getUser().getId())
                     .name(review.getUser().getDisplayName())
                     .rating(review.getRating())
                     .content(review.getContent())

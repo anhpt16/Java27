@@ -4,13 +4,16 @@ export const reviewService = {
 
     // Thêm bình luận cho phim
     addReview: async (data) => {
-        return await postData(`/review`, data);
+        return await postData(`/reviews`, data);
     },
 
     // Sửa bình luận
     updateReview: async (data) => {
-        return await putData(`/review`, data);
+        return await putData(`/reviews`, data);
+    },
+
+    // Xóa review
+    deleteReview: async (reviewId) => {
+        return await deleteData(`/reviews/${reviewId}`);
     }
-
-
 }

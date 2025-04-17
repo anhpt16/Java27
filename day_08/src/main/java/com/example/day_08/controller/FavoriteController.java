@@ -1,5 +1,6 @@
 package com.example.day_08.controller;
 
+import com.example.day_08.model.dto.UserContext;
 import com.example.day_08.model.response.ShortMovieResponse;
 import com.example.day_08.service.FavoriteService;
 import com.example.day_08.service.UserService;
@@ -25,8 +26,8 @@ public class FavoriteController {
         @RequestParam (name = "size", defaultValue = "18") int size,
         Model model
     ) {
-        Integer defautlUserId = 1;
-        Page<ShortMovieResponse> favoriteMovies = favoriteService.getFavoriteMoviesByUser(defautlUserId, page - 1, size);
+        Integer userId = UserContext.getUser().getId();
+        Page<ShortMovieResponse> favoriteMovies = favoriteService.getFavoriteMoviesByUser(userId, page - 1, size);
         model.addAttribute("favoriteMovies", favoriteMovies);
         return "movies_favorite";
     }

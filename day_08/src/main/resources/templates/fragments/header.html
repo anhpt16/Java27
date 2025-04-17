@@ -54,8 +54,20 @@
         </ul>
       </div>
 
-      <a class="nav-link text-white" href="#">Đăng nhập</a>
+      <a class="nav-link text-white" th:if="${session.currentUser == null}" href="/login">Đăng nhập</a>
+      <div class="dropdown" th:if="${session.currentUser != null}">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.currentUser.displayName}">
 
+        </button>
+        <ul class="dropdown-menu">
+          <li th:if="${session.currentUser.role.toString().equals('ADMIN')}">
+            <a class="dropdown-item" href="#">Trang quản trị</a>
+          </li>
+          <li><a class="dropdown-item" href="#">Hồ sơ cá nhân</a></li>
+          <li><a class="dropdown-item" href="/phim-yeu-thich">Phim yêu thích</a></li>
+          <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 </div>

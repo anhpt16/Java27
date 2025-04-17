@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReviewResponse {
     private final Integer id;
+    private final Integer userId;
     private final String name;
     private final Integer rating;
     private final LocalDateTime date;
